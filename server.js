@@ -16,6 +16,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 
 app.get("/", async (req, res) => {
+  console.log(__dirname);
   const shortUrls = await ShortUrl.find();
   res.render("index", { shortUrls: shortUrls });
 });
