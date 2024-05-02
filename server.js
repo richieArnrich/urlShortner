@@ -3,13 +3,20 @@ const mongoose = require("mongoose");
 const ShortUrl = require("./models/shortUrl");
 const app = express();
 
-mongoose.connect(
-  "mongodb+srv://richie:richie@cluster0.rphiz.mongodb.net/urlShortner",
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+const connect = async () => {
+  try {
+    await mongoose.connect(
+      "mongodb+srv://richie:richie@cluster0.rphiz.mongodb.net/urlShortner",
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }
+    );
+    console.log("MongoDB database connected");
+  } catch (err) {
+    console.log("MongoDB connection failed ", err);
   }
-);
+};
 
 app.set("view engine", "ejs");
 
@@ -36,5 +43,6 @@ app.get("/:shortUrl", async (req, res) => {
 });
 
 app.listen(5000, () => {
+  connect();
   console.log("server running on port 5000");
 });
